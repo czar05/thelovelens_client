@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useState } from "react";
+import LandingPage from "./Landing";
+import SearchResultsPage from "./Search";
 
-const Home = () => {
+const PhotographyBookingApp = () => {
+  const [view, setView] = useState("landing");
+  const [searchParams, setSearchParams] = useState({});
+
+  const handleSearch = (params) => {
+    setSearchParams(params);
+    setView("search");
+  };
+
+  const handleBackToHome = () => {
+    setView("landing");
+  };
+
   return (
     <div>
-      <h1 className="text-2xl font-bold">Welcome to TheLoveLens</h1>
-      <p className="mt-4">This is the home page of our application.</p>
+      {view === "landing" && <LandingPage onSearch={handleSearch} />}
+      {view === "search" && (
+        <SearchResultsPage
+          searchParams={searchParams}
+          onBackToHome={handleBackToHome}
+        />
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Home 
+export default PhotographyBookingApp;
