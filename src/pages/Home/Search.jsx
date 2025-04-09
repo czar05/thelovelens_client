@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { MapPin, Calendar, Camera, Award, DollarSign, Star, ChevronDown, ChevronRight, X, Filter } from 'lucide-react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import user from '../../assets/images/user.jpg';
+import p1 from '../../assets/images/p1.jpg';
+import p2 from '../../assets/images/p1.jpg';
+import p3 from '../../assets/images/p1.jpg';
+import AuthModal from '../../components/auth/AuthModal';
 
 const photographers = [
     { 
@@ -13,8 +19,8 @@ const photographers = [
       price: 150, 
       priceUnit: 'hour', 
       specialties: ['Wedding', 'Portrait'],
-      image: '/api/placeholder/500/500', 
-      portfolio: ['/api/placeholder/400/300', '/api/placeholder/400/300', '/api/placeholder/400/300'] 
+      image: user, 
+      portfolio: [p1, p2, p3] 
     },
     { 
       id: 2, 
@@ -69,6 +75,7 @@ const SearchResultsPage = ({ searchParams, onBackToHome }) => {
     const [priceRange, setPriceRange] = useState([50, 300]);
     const [rating, setRating] = useState(0);
     const [selectedOccasions, setSelectedOccasions] = useState([]);
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const navigate = useNavigate();
     const toggleOccasion = (occasion) => {
       if (selectedOccasions.includes(occasion)) {
@@ -476,6 +483,7 @@ const SearchResultsPage = ({ searchParams, onBackToHome }) => {
                             className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
+                            onClick={() => setIsAuthModalOpen(true)}
                           >
                             Book Now
                           </motion.button>
@@ -508,6 +516,11 @@ const SearchResultsPage = ({ searchParams, onBackToHome }) => {
             </motion.div>
           </div>
         </div>
+
+        <AuthModal 
+          isOpen={isAuthModalOpen} 
+          onClose={() => setIsAuthModalOpen(false)} 
+        />
       </div>
     );
   };
